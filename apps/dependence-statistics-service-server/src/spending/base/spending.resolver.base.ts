@@ -28,6 +28,7 @@ import { UpdateSpendingArgs } from "./UpdateSpendingArgs";
 import { DeleteSpendingArgs } from "./DeleteSpendingArgs";
 import { Device } from "../../device/base/Device";
 import { User } from "../../user/base/User";
+import { CastingPeriodInput } from "../CastingPeriodInput";
 import { SpendingService } from "../spending.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Spending)
@@ -208,5 +209,13 @@ export class SpendingResolverBase {
       return null;
     }
     return result;
+  }
+
+  @graphql.Mutation(() => String)
+  async StartCastingPeriod(
+    @graphql.Args()
+    args: CastingPeriodInput
+  ): Promise<string> {
+    return this.service.StartCastingPeriod(args);
   }
 }

@@ -26,6 +26,8 @@ import { Savings } from "./Savings";
 import { SavingsFindManyArgs } from "./SavingsFindManyArgs";
 import { SavingsWhereUniqueInput } from "./SavingsWhereUniqueInput";
 import { SavingsUpdateInput } from "./SavingsUpdateInput";
+import { GetSavedMoneyInput } from "../GetSavedMoneyInput";
+import { GetSavedMoneyOutput } from "../GetSavedMoneyOutput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -236,5 +238,22 @@ export class SavingsControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.Get("/savings")
+  @swagger.ApiOkResponse({
+    type: GetSavedMoneyOutput,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async GetSavedMoney(
+    @common.Body()
+    body: GetSavedMoneyInput
+  ): Promise<GetSavedMoneyOutput> {
+    return this.service.GetSavedMoney(body);
   }
 }

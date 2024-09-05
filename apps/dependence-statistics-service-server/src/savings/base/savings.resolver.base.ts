@@ -27,6 +27,8 @@ import { CreateSavingsArgs } from "./CreateSavingsArgs";
 import { UpdateSavingsArgs } from "./UpdateSavingsArgs";
 import { DeleteSavingsArgs } from "./DeleteSavingsArgs";
 import { User } from "../../user/base/User";
+import { GetSavedMoneyInput } from "../GetSavedMoneyInput";
+import { GetSavedMoneyOutput } from "../GetSavedMoneyOutput";
 import { SavingsService } from "../savings.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Savings)
@@ -176,5 +178,13 @@ export class SavingsResolverBase {
       return null;
     }
     return result;
+  }
+
+  @graphql.Query(() => GetSavedMoneyOutput)
+  async GetSavedMoney(
+    @graphql.Args()
+    args: GetSavedMoneyInput
+  ): Promise<GetSavedMoneyOutput> {
+    return this.service.GetSavedMoney(args);
   }
 }

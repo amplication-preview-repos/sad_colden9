@@ -26,6 +26,7 @@ import { Spending } from "./Spending";
 import { SpendingFindManyArgs } from "./SpendingFindManyArgs";
 import { SpendingWhereUniqueInput } from "./SpendingWhereUniqueInput";
 import { SpendingUpdateInput } from "./SpendingUpdateInput";
+import { CastingPeriodInput } from "../CastingPeriodInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -283,5 +284,22 @@ export class SpendingControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.Post("/spending/start")
+  @swagger.ApiOkResponse({
+    type: String,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async StartCastingPeriod(
+    @common.Body()
+    body: CastingPeriodInput
+  ): Promise<string> {
+    return this.service.StartCastingPeriod(body);
   }
 }

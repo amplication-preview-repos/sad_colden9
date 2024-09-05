@@ -15,6 +15,8 @@ import {
   Savings as PrismaSavings,
   User as PrismaUser,
 } from "@prisma/client";
+import { GetSavedMoneyInput } from "../GetSavedMoneyInput";
+import { GetSavedMoneyOutput } from "../GetSavedMoneyOutput";
 
 export class SavingsServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -49,5 +51,8 @@ export class SavingsServiceBase {
         where: { id: parentId },
       })
       .user();
+  }
+  async GetSavedMoney(args: GetSavedMoneyInput): Promise<GetSavedMoneyOutput> {
+    throw new Error("Not implemented");
   }
 }

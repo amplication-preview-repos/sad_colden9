@@ -18,6 +18,8 @@ import {
   User as PrismaUser,
 } from "@prisma/client";
 
+import { CastingPeriodInput } from "../CastingPeriodInput";
+
 export class SpendingServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
 
@@ -65,5 +67,8 @@ export class SpendingServiceBase {
         where: { id: parentId },
       })
       .user();
+  }
+  async StartCastingPeriod(args: CastingPeriodInput): Promise<string> {
+    throw new Error("Not implemented");
   }
 }
